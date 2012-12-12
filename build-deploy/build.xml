@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DTOx" default="help" basedir="../">
+    <import file="php-code-quality.xml" />
+    <import file="php-testing.xml" />
+    <property file="${basedir}/build-deploy/build.properties" />
+
+    <target name="help" description="Display detailed usage information">
+        <echo>Type "ant -p" to see a list of targets</echo>
+    </target>
+
+    <target name="build" depends="clean, prepare, phpunit" />
+    <target name="build:full" depends="build, phpcs, lint, phpdoc" />
+
+    <target name="clean" description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/coverage" />
+        <delete dir="${basedir}/build/logs" />
+        <delete dir="${basedir}/build/docs" />
+    </target>
+
+    <target name="clean:vendor" description="Cleanup vendor artifacts">
+        <delete dir="vendor" />
+        <delete dir="bin" />
+    </target>
+
+    <target name="prepare" description="Prepare for build">
+        <mkdir dir="${basedir}/build/coverage" />
+        <mkdir dir="${basedir}/build/logs" />
+        <mkdir dir="${basedir}/build/docs" />
+        <mkdir dir="${basedir}/bin" />
+    </target>
+
+    <target name="lint" description="Runs the php syntax check on entire code base">
+        <apply executable="php" failonerror="true">
+            <arg value="-l" />
+            <fileset dir="${basedir}/src/">
+                <include name="**/*.ph*" />
+                <modified />
+            </fileset>
+        </apply>
+    </target>
+
+    <target name="phpdoc" description="Generate API documentation using phpDocumentor2">
+        <exec executable="phpdoc" failonerror="false">
+            <arg value="run" />
+            <arg value="--directory" />
+            <arg path="${basedir}/src/" />
+            <arg value="--target" />
+            <arg path="${basedir}/build/docs" />
+            <arg value="--title" />
+            <arg value="DTOx" />
+            <arg value="--ignore" />
+            <arg value="tests/*" />
+        </exec>
+    </target>
+
+</project>

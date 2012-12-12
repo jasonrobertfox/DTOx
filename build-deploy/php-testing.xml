@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DTOx - Testing" basedir="../">
+
+    <target name="phpunit" description="Run all unit tests with PHPUnit">
+        <exec dir="${basedir}/tests/unit/" executable="${basedir}/bin/phpunit" failonerror="true">
+            <arg value="--testdox-html" />
+            <arg path="${basedir}/build/logs/unit/testdox.html" />
+        </exec>
+    </target>
+
+</project>

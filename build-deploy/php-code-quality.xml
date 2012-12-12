@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DTOx - PHP Coding Quality Tools" basedir="../">
+  
+    <target name="phpcs" description="Find all coding standard violations ERRORS using PHP_CodeSniffer">
+        <exec dir="${basedir}" executable="${basedir}/bin/phpcs">
+            <arg value="--standard=PSR2" />
+            <arg value="-n" />
+            <arg path="src/" />
+        </exec>
+    </target>
+
+    <target name="phpcs:fix" description="Fix all coding standard violations using php-cs-fixer">
+        <exec dir="${basedir}" executable="bin/php-cs-fixer">
+            <arg value="--level=psr2" />
+            <arg value="fix" />
+            <arg path="src/" />
+        </exec>
+        <exec dir="${basedir}" executable="bin/php-cs-fixer">
+            <arg value="--level=psr2" />
+            <arg value="fix" />
+            <arg path="tests/unit" />
+        </exec>
+    </target>
+
+</project>

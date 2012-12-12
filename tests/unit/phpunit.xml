@@ -2,8 +2,8 @@
 <phpunit bootstrap="Bootstrap.php" colors="true">
     <!-- ALL TEST SUITES -->
     <testsuites>
-        <testsuite name="DTOBuilder">
-           <directory suffix=".php">./DTOBuilder/</directory>
+        <testsuite name="DTOx">
+           <directory suffix=".php">./DTOx/</directory>
         </testsuite>
     </testsuites>
     <!-- FILTERS -->
@@ -15,10 +15,10 @@
     </filter>
     <!-- LOGGING AND CODE COVERAGE -->
     <logging>
-        <log type="coverage-html" target="../../build/coverage/modules/application/unit/" title="Application Module" charset="UTF-8"
+        <log type="coverage-html" target="../../build/coverage/unit/" title="Application Module" charset="UTF-8"
             yui="true" highlight="true" lowUpperBound="35" highLowerBound="90" />
-        <log type="coverage-clover" target="../../build/coverage/modules/application/unit/clover.xml" />
+        <log type="coverage-clover" target="../../build/coverage/unit/clover.xml" />
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
-        <log type="junit" target="../../build/logs/modules/application/unit/junit.xml" logIncompleteSkipped="false" />
+        <log type="junit" target="../../build/logs/unit/junit.xml" logIncompleteSkipped="false" />
     </logging>
 </phpunit>
