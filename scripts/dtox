@@ -1,14 +1,12 @@
 #!/usr/bin/env php
 <?php
-$projectRoot = dirname(__DIR__);
-$vendorAutoload = $projectRoot . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
-$path = array(
-    $projectRoot
-);
-set_include_path(implode(PATH_SEPARATOR, $path) . PATH_SEPARATOR . get_include_path());
-
-require $vendorAutoload;
+$autoload = dirname(dirname(dirname(dirname(__FILE__)))) .'/autoload.php';
+if (file_exists($autoload)) {
+    require $autoload;
+} else {
+    require dirname(dirname(__FILE__)) .'/vendor/autoload.php';
+}
 
 use DTOx\Console\DtoxCommand;
 use Symfony\Component\Console\Application;
