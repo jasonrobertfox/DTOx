@@ -3,3 +3,4 @@ bin
 build
 composer.lock
 cache.properties
+.DS_Store

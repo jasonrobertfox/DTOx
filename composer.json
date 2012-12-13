@@ -5,11 +5,23 @@
     "authors": [
         {
             "name": "Jason Fox",
-            "email": "jasonrobertfox@gmail.com"
+            "email": "jasonrobertfox@gmail.com",
+            "homepage": "http://jasonrobertfox.com",
+            "role": "developer"
         }
     ],
+    "keywords": [
+        "dto",
+        "generator"
+    ],
+    "support": {
+        "issues": "https://github.com/jrobertfox/DTOx/issues",
+        "source": "https://github.com/jrobertfox/DTOx"
+    },
     "autoload": {
-        "psr-0": {"DTOx": "src/"}
+        "psr-0": {
+            "DTOx": "src/"
+        }
     },
     "require": {
         "symfony/console": "v2.1.3"
@@ -24,4 +36,7 @@
         "vendor-dir": "vendor/",
         "bin-dir": "bin/"
     }
+    "bin": [
+        "scripts/dtox"
+    ]
 }
