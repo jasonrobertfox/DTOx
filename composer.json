@@ -35,7 +35,7 @@
     "config": {
         "vendor-dir": "vendor/",
         "bin-dir": "bin/"
-    }
+    },
     "bin": [
         "scripts/dtox"
     ]
