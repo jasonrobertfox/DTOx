@@ -1,12 +1,10 @@
 #!/usr/bin/env php
 <?php
-$projectRoot = __DIR__ . "/..";
+$projectRoot = dirname(__DIR__);
 $vendorAutoload = $projectRoot . DIRECTORY_SEPARATOR . 'vendor/autoload.php';
 
-
-$applicationModule = $projectRoot . DIRECTORY_SEPARATOR . 'module/Application/src';
 $path = array(
-    $projectRoot, $applicationModule
+    $projectRoot
 );
 set_include_path(implode(PATH_SEPARATOR, $path) . PATH_SEPARATOR . get_include_path());
 
