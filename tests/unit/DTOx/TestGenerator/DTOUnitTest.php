@@ -71,10 +71,10 @@ class WidgetDTOTest extends \PHPUnit_Framework_TestCase
      */
     public function initializeValidWidgetDTO()
     {
-        $WidgetDTO = $this->createPopulatedWidgetDTO();
-        $this->assertInstanceOf(\'Company\Application\CamelCasedNameSpace\WidgetDTO\', $WidgetDTO, \'instanceOf\');
-        $this->assertEquals(self::VALID_ID, $WidgetDTO->getId(), \'getId\');
-        $this->assertEquals(self::VALID_NAME, $WidgetDTO->getName(), \'getName\');
+        $widgetDTO = $this->createPopulatedWidgetDTO();
+        $this->assertInstanceOf(\'Company\Application\CamelCasedNameSpace\WidgetDTO\', $widgetDTO, \'instanceOf\');
+        $this->assertEquals(self::VALID_ID, $widgetDTO->getId(), \'getId\');
+        $this->assertEquals(self::VALID_NAME, $widgetDTO->getName(), \'getName\');
     }
 
     /**
@@ -86,10 +86,10 @@ class WidgetDTOTest extends \PHPUnit_Framework_TestCase
      */
     public function initializeNullWidgetDTO()
     {
-        $WidgetDTO = newWidgetDTO(null, null);
-        $this->assertInstanceOf(\'Company\Application\CamelCasedNameSpace\WidgetDTO\', $WidgetDTO, \'instanceOf\');
-        $this->assertNull($WidgetDTO->getId(), \'getId\');
-        $this->assertNull($WidgetDTO->getName(), \'getName\');
+        $widgetDTO = new WidgetDTO(null, null);
+        $this->assertInstanceOf(\'Company\Application\CamelCasedNameSpace\WidgetDTO\', $widgetDTO, \'instanceOf\');
+        $this->assertNull($widgetDTO->getId(), \'getId\');
+        $this->assertNull($widgetDTO->getName(), \'getName\');
     }
 
     /**
@@ -101,9 +101,9 @@ class WidgetDTOTest extends \PHPUnit_Framework_TestCase
      */
     public function successfulSystemSerialization()
     {
-        $WidgetDTO = $this->creatPopulatedWidgetDTO();
-        serialized = serialize($WidgetDTO);
-        $this->assertEquals($WidgetDTO, unserialize($serialized), \'unserialize\');
+        $widgetDTO = $this->createPopulatedWidgetDTO();
+        $serialized = serialize($widgetDTO);
+        $this->assertEquals($widgetDTO, unserialize($serialized), \'unserialize\');
     }
 
     /**
@@ -115,9 +115,9 @@ class WidgetDTOTest extends \PHPUnit_Framework_TestCase
      */
     public function successfulClassSerialization()
     {
-        $WidgetDTO = $this->creatPopulatedWidgetDTO();
-        $serialized = $WidgetDTO->serialize();
-        $newWidgetDTO = newWidgetDTO(null, null);
+        $widgetDTO = $this->createPopulatedWidgetDTO();
+        $serialized = $widgetDTO->serialize();
+        $newWidgetDTO = new WidgetDTO(null, null);
         $newWidgetDTO->unserialize($serialized);
         $this->assertEquals($widgetDTO, $newWidgetDTO, \'unserialize\');
     }
@@ -131,7 +131,7 @@ class WidgetDTOTest extends \PHPUnit_Framework_TestCase
      */
     public function createPopulatedWidgetDTO()
     {
-        return $widgetDTO = new WidgetDTO(self::VALID_ID, self::VALID_NAME);
+        return new WidgetDTO(self::VALID_ID, self::VALID_NAME);
     }
 }
 ';
@@ -142,5 +142,4 @@ class WidgetDTOTest extends \PHPUnit_Framework_TestCase
     {
         return new DTOUnit('WidgetDTO', 'Company\Application\CamelCasedNameSpace', array('id'=>123, 'name'=>'John Doe'));
     }
-
 }
