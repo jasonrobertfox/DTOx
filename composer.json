@@ -2,6 +2,7 @@
     "name": "jrobertfox/dtox",
     "description": "Creates really fresh DTOs",
     "homepage":"http://jrobertfox.github.com/DTOx",
+    "version": "v1.1.0",
     "authors": [
         {
             "name": "Jason Fox",
