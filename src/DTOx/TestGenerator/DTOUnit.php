@@ -29,7 +29,13 @@ class DTOUnit implements CodeGenerator, TestGenerator
         $this->classFile = new ClassFile($className.'Test', $classNameSpace);
         $this->classNameSpace = $classNameSpace;
         $this->className = $className;
+        $this->instanceName = lcfirst($className);
         $this->variables = $variables;
+        $this->constantNames = array();
+        foreach (array_keys($variables) as $name) {
+            $constantName = strtoupper(implode('_', preg_split('/(?=[A-Z])/', $name)));
+            $this->constantNames[$name] = array('constant' =>$constantName, 'name'=>$name);
+        }
         $this->classFile->setParentClass('PHPUnit_Framework_TestCase');
         $this->classFile->addUseStatement($className, $classNameSpace);
         $this->addConstants();
@@ -68,12 +74,10 @@ class DTOUnit implements CodeGenerator, TestGenerator
     private function initializeValid()
     {
         $element = new ClassMethodElement('initializeValid'.$this->className, 'public');
-        $element->addBodyLine('$'.$this->className.' = $this->createPopulated'.$this->className.'();');
-        $element->addBodyLine('$this->assertInstanceOf(\''.$this->classNameSpace.'\\'.$this->className.'\', $'.$this->className.', \'instanceOf\');');
-
-        foreach ($this->variables as $name => $value) {
-            $constantName = strtoupper(implode('_', preg_split('/(?=[A-Z])/', $name)));
-            $element->addBodyLine('$this->assertEquals(self::VALID_'.$constantName.', $'.$this->className.'->get'.ucfirst($name).'(), \'get'.ucfirst($name).'\');');
+        $element->addBodyLine('$'.$this->instanceName.' = $this->createPopulated'.$this->className.'();');
+        $element->addBodyLine('$this->assertInstanceOf(\''.$this->classNameSpace.'\\'.$this->className.'\', $'.$this->instanceName.', \'instanceOf\');');
+        foreach ($this->constantNames as $name) {
+            $element->addBodyLine('$this->assertEquals(self::VALID_'.$name['constant'].', $'.$this->instanceName.'->get'.ucfirst($name['name']).'(), \'get'.ucfirst($name['name']).'\');');
         }
         $this->addElement($element);
     }
@@ -81,11 +85,10 @@ class DTOUnit implements CodeGenerator, TestGenerator
     private function initializeNull()
     {
         $element = new ClassMethodElement('initializeNull'.$this->className, 'public');
-        $element->addBodyLine('$'.$this->className.' = new'.$this->className.'('.implode(', ', array_fill(0, count($this->variables), 'null')).');');
-        $element->addBodyLine('$this->assertInstanceOf(\''.$this->classNameSpace.'\\'.$this->className.'\', $'.$this->className.', \'instanceOf\');');
-        foreach ($this->variables as $name => $value) {
-            $constantName = strtoupper(implode('_', preg_split('/(?=[A-Z])/', $name)));
-            $element->addBodyLine('$this->assertNull($'.$this->className.'->get'.ucfirst($name).'(), \'get'.ucfirst($name).'\');');
+        $element->addBodyLine('$'.$this->instanceName.' = new '.$this->className.'('.implode(', ', array_fill(0, count($this->variables), 'null')).');');
+        $element->addBodyLine('$this->assertInstanceOf(\''.$this->classNameSpace.'\\'.$this->className.'\', $'.$this->instanceName.', \'instanceOf\');');
+        foreach ($this->constantNames as $name) {
+            $element->addBodyLine('$this->assertNull($'.$this->instanceName.'->get'.ucfirst($name['name']).'(), \'get'.ucfirst($name['name']).'\');');
         }
         $this->addElement($element);
     }
@@ -93,20 +96,20 @@ class DTOUnit implements CodeGenerator, TestGenerator
     private function successfulSystemSerialization()
     {
         $element = new ClassMethodElement('successfulSystemSerialization', 'public');
-        $element->addBodyLine('$'.$this->className.' = $this->creatPopulated'.$this->className.'();');
-        $element->addBodyLine('serialized = serialize($'.$this->className.');');
-        $element->addBodyLine('$this->assertEquals($'.$this->className.', unserialize($serialized), \'unserialize\');');
+        $element->addBodyLine('$'.$this->instanceName.' = $this->createPopulated'.$this->className.'();');
+        $element->addBodyLine('$serialized = serialize($'.$this->instanceName.');');
+        $element->addBodyLine('$this->assertEquals($'.$this->instanceName.', unserialize($serialized), \'unserialize\');');
         $this->addElement($element);
     }
 
     private function successfulClassSerialization()
     {
         $element = new ClassMethodElement('successfulClassSerialization', 'public');
-        $element->addBodyLine('$'.$this->className.' = $this->creatPopulated'.$this->className.'();');
-        $element->addBodyLine('$serialized = $'.$this->className.'->serialize();');
-        $element->addBodyLine('$new'.$this->className.' = new'.$this->className.'('.implode(', ', array_fill(0, count($this->variables), 'null')).');');
+        $element->addBodyLine('$'.$this->instanceName.' = $this->createPopulated'.$this->className.'();');
+        $element->addBodyLine('$serialized = $'.$this->instanceName.'->serialize();');
+        $element->addBodyLine('$new'.$this->className.' = new '.$this->className.'('.implode(', ', array_fill(0, count($this->variables), 'null')).');');
         $element->addBodyLine('$new'.$this->className.'->unserialize($serialized);');
-        $element->addBodyLine('$this->assertEquals($'.lcfirst($this->className).', $new'.$this->className.', \'unserialize\');');
+        $element->addBodyLine('$this->assertEquals($'.$this->instanceName.', $new'.$this->className.', \'unserialize\');');
         $this->addElement($element);
     }
 
@@ -115,11 +118,10 @@ class DTOUnit implements CodeGenerator, TestGenerator
         $element = new ClassMethodElement('createPopulated'.$this->className, 'public');
         $element->returns($this->classNameSpace.'\\'.$this->className);
         $params = array();
-        foreach ($this->variables as $name => $value) {
-            $constantName = strtoupper(implode('_', preg_split('/(?=[A-Z])/', $name)));
-            $params[] = 'self::VALID_'.$constantName;
+        foreach ($this->constantNames as $name) {
+            $params[] = 'self::VALID_'.$name['constant'];
         }
-        $element->addBodyLine('return $'.lcfirst($this->className).' = new '.$this->className.'('.implode(', ', $params).');');
+        $element->addBodyLine('return new '.$this->className.'('.implode(', ', $params).');');
         $this->addElement($element);
     }
 

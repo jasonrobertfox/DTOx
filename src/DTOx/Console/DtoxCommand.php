@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use DTOx\Generator\DTO;
+use DTOx\TestGenerator\DTOUnit;
 
 /**
  * @package    DTOx\TestGenerator
@@ -46,7 +47,7 @@ class DtoxCommand extends Command
     {
         $dialog = $this->getHelperSet()->get('dialog');
         $type = $input->getArgument('type');
-        if (strtolower($type) == 'dto') {
+        if (in_array(strtolower($type), array('dto','dto-unit'))) {
             $className = $this->getClassName($input->getArgument('fqcn'));
             $path = $this->getPath($input->getArgument('fqcn'));
             $output->writeln("Creating a new $type called $className in $path...");
@@ -74,16 +75,20 @@ class DtoxCommand extends Command
 
     private function react($type, $fqcn, $variables)
     {
+        $className = $this->getClassName($fqcn);
+        $nameSpace = $this->getNameSpace($fqcn);
+        $variablesArray = array();
+        foreach ($variables as $variableString) {
+            $parts = explode(':', $variableString);
+            $variablesArray[$parts[1]] = $parts[0];
+        }
         switch ($type) {
             case 'dto':
-                $className = $this->getClassName($fqcn);
-                $nameSpace = $this->getNameSpace($fqcn);
-                $variablesArray = array();
-                foreach ($variables as $variableString) {
-                    $parts = explode(':', $variableString);
-                    $variablesArray[$parts[1]] = $parts[0];
-                }
                 $generator = new DTO($className, $nameSpace, $variablesArray);
+                break;
+            case 'dto-unit':
+                $generator = new DTOUnit($className, $nameSpace, $variablesArray);
+                $className.='Test';
                 break;
             default:
                 throw new \RuntimeException('A formula for that reaction is not found!');
