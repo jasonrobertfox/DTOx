@@ -1,33 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
     <title>DTOx by jrobertfox</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">DTOx</h1>
+        <p class="header">Tool to generate clean PHP Code and Tests</p>
 
-    <header>
-      <div class="container">
-        <h1>DTOx</h1>
-        <h2>Tool to generate clean PHP Code and Tests</h2>
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/jrobertfox/DTOx/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/jrobertfox/DTOx/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/jrobertfox/DTOx">View On GitHub</a></li>
+        </ul>
 
-        <section id="downloads">
-          <a href="https://github.com/jrobertfox/DTOx/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/jrobertfox/DTOx/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/jrobertfox/DTOx" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/jrobertfox">jrobertfox</a></p>
 
-    <div class="container">
-      <section id="main_content">
+
+      </header>
+      <section>
         <h2>Use DTOx to quickly create well formed DTOs</h2>
 
 <p>The <a href="http://en.wikipedia.org/wiki/Data_transfer_object">Data Transfer Object</a> is a lightweight, serializeable object for the purpose of transferring data. They can be valuable in the development of APIs where you would like to expose simple objects, and clean documentation. Writing them and their tests can be tedious at times, so use this package to quickly create them for your project. </p>
@@ -39,7 +41,14 @@
 <pre><code>$ dtox react dto 'SludgeCo\Acid\BurnyDTO' string:name int:burnLevel
 </code></pre>
 
-<p>This will create a <code>BurnyDTO.php</code> dilw in rhw <code>SludgeCo/Acid/</code> directory relative to where you run the command. Inside the file you will find a documented and PSR-2 compliant DTO class that implements the <code>\Serializable</code> interface.</p>
+<p>This will create a <code>BurnyDTO.php</code> dto in the <code>SludgeCo/Acid/</code> directory relative to where you run the command. Inside the file you will find a documented and PSR-2 compliant DTO class that implements the <code>\Serializable</code> interface.</p>
+
+<p>To create the corresponding Unit Test for the DTO, use a command like this:</p>
+
+<pre><code>$ dtox react dto-unit 'SludgeCo\Acid\BurnyDTO' "Red Acid:name" 10:burnLevel
+</code></pre>
+
+<p>This will create a <code>BurnyDTOTest.php test class in the</code>SludgeCo/Acid/` directory relative to where you run the command. Note that instead of the variable type you put the test data that you want to include in the test class. </p>
 
 <h2>Installing</h2>
 
@@ -64,11 +73,11 @@
 <pre><code>$dtox react &lt;FORMULA&gt; &lt;FULLY_QUALIFIED_CLASS_NAME&gt; &lt;VARIABLE_1&gt; ... &lt;VARIABLE_N&gt;
 </code></pre>
 
-<p><strong>Formula</strong> - the type of object you want to "react" ("dto" is currently supported)</p>
+<p><strong>Formula</strong> - the type of object you want to "react" ("dto" and "dto-unit" are currently supported)</p>
 
 <p><strong>Fully Qualified Class Name</strong> - The full name of your class, including the namespace.</p>
 
-<p><strong>Variables</strong> - Variables in the form <code>&lt;TYPE&gt;:&lt;NAME&gt;</code> that will be included in the DTO construction, for example <code>string:name</code> will create add a <code>$name</code> variable with the type <code>string</code>.</p>
+<p><strong>Variables</strong> - Variables in the form <code>&lt;TYPE&gt;:&lt;NAME&gt;</code> that will be included in the DTO construction, for example <code>string:name</code> will create add a <code>$name</code> variable with the type <code>string</code>. For Test classes the form is <code>&lt;TEST_DATA&gt;:&lt;NAME&gt;</code>. This lets you build out your tests with realistic data.</p>
 
 <h3>Support and Roadmap</h3>
 
@@ -84,8 +93,11 @@
 
 <p>Licensed under <a href="http://opensource.org/licenses/MIT">MIT License</a></p>
       </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
     </div>
-
-    
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
