@@ -32,7 +32,11 @@
         "mockery/mockery": ">=0.7.2",
         "phpunit/phpunit": "3.7.*",
         "fabpot/php-cs-fixer": "dev-master",
-        "squizlabs/php_codesniffer": "dev-master"
+        "squizlabs/php_codesniffer": "dev-master",
+        "behat/behat": "2.4.*@stable",
+        "behat/mink": "1.4@stable",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-extension": "*"
     },
     "config": {
         "vendor-dir": "vendor/",

@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="DTOx" default="help" basedir="../">
     <import file="php-code-quality.xml" />
+    <import file="composer.xml" />
     <import file="php-testing.xml" />
     <property file="${basedir}/build-deploy/build.properties" />
 
     <target name="help" description="Display detailed usage information">
         <echo>Type "ant -p" to see a list of targets</echo>
+    </target>
+
+    <target name="bootstrap" description="Sets up this project">
+        <antcall target="clean:vendor" />
+        <antcall target="composer:dev" />
     </target>
 
     <target name="build" depends="clean, prepare, phpunit" />
@@ -18,6 +24,7 @@
     </target>
 
     <target name="clean:vendor" description="Cleanup vendor artifacts">
+        <delete file="build-deploy/composer.phar" verbose="true" />
         <delete dir="vendor" />
         <delete dir="bin" />
     </target>
