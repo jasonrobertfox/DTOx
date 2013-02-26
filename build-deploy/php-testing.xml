@@ -11,7 +11,7 @@
     <target name="behat" description="Run system tests with behat except those requiring javascript interaction." depends="prepare">
         <exec dir="${basedir}" executable="${basedir}/bin/behat" failonerror="true">
             <arg value="--tags=~@javascript" />
-            <arg value="--config=${basedir}/behat.yml" />
+            <arg value="--config=${basedir}/tests/system/behat.yml" />
             <arg value="--format=html,progress" />
             <arg value="--out=build/logs/behat.html," />
         </exec>

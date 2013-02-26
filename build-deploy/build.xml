@@ -36,6 +36,14 @@
         <mkdir dir="${basedir}/bin" />
     </target>
 
+    <target name="config:behat">
+        <copy file="${basedir}/build-deploy/config-template/behat.yml.template" tofile="${basedir}/tests/system/behat.yml" overwrite="true">
+            <filterset begintoken="{{" endtoken="}}">
+                <filtersfile file="${basedir}/build-deploy/config-template/behat.properties" />
+            </filterset>
+        </copy>
+    </target>
+
     <target name="lint" description="Runs the php syntax check on entire code base">
         <apply executable="php" failonerror="true">
             <arg value="-l" />
