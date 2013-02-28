@@ -1,0 +1,12 @@
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.vars input[type=text] {
+    height: 28px;
+}

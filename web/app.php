@@ -7,6 +7,8 @@
  * @author      Jason Fox <jasonrobertfox@gmail.com>
  */
 
+use Symfony\Component\HttpFoundation\Request;
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new Silex\Application();
@@ -22,6 +24,26 @@ $app->get(
     '/',
     function () use ($app) {
         return $app['twig']->render('home.html.twig');
+    }
+);
+
+$app->post(
+    '/dto/',
+    function (Request $request) use ($app) {
+        $dtoInfo = json_decode($request->getContent());
+
+        $variablesArray = array();
+        $testDataArray = array();
+        foreach ($dtoInfo->vars as $var) {
+            $variablesArray[$var->name] = $var->type;
+            $testDataArray[$var->name] = $var->testData;
+        }
+        $returnData =  new \StdClass();
+        $generator =  new DTOx\Generator\DTO($dtoInfo->name, $dtoInfo->namespace, $variablesArray);
+        $returnData->dto = $generator->generate();
+        $generator = new DTOx\TestGenerator\DTOUnit($dtoInfo->name, $dtoInfo->namespace, $testDataArray);
+        $returnData->test = $generator->generate();
+        return $app->json($returnData);
     }
 );
 $app['debug'] = true;
