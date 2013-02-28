@@ -1,50 +1,56 @@
 {% extends 'default.html.twig' %}
 {% block content %}
     <div class="row">
-        <div class="span6">
-            <h1>DTOx</h1>
-            <p class="lead">DTOx is a program that lets you create DTOs.</p>
+        <div class="title span12">
+            <h1><i class="icon-beaker icon-large"></i> DTOx</h1>
+            <p class="lead">"Writting tedious code sucks. Generate it with DTOx."</p>
         </div>
     </div>
 
     <div ng-controller="DTOCtrl">
-        <div class="row" >
-            <div class="span12">
-                <form class="form-inline">
-                    Build me a DTO named:
-                    <input type="text" name="dto-name-field" placeholder="MyDTO" ng-model="dto.name" ng-change="change()">
-                    in the Namespace:
-                    <input type="text" name="namespace-field" placeholder="My\App\Namespace" ng-model="dto.namespace" ng-change="change()">
-                </form>
-            </div>
-        </div>
-        <form class="vars form-inline">
-            <div ng-repeat="var in dto.vars">
-                {% verbatim %}
-                <input type="text" ng-change="change()" ng-pattern="/^[a-z][a-zA-Z0-9]*$/" ng-model="var.name" value="{{var.name}}"/>
-                <input type="text" class="input" ng-change="change()" ng-model="var.type" value="{{var.type}}"/>
-                =
-                <input type="text" class="input" ng-change="change()" ng-model="var.testData" value="{{var.testData}}"/>
-                {% endverbatim %}
-            </div>
+        <div class="well">
+        <form class="vars">
+            <label>Name your DTO:</label>
+            <input type="text" name="dto-name-field" placeholder="MyDTO" ng-model="dto.name" ng-change="change()">
+            <label>Give it a Namespace:</label>
+            <input type="text" name="namespace-field" placeholder="My\App\Namespace" ng-model="dto.namespace" ng-change="change()">
         </form>
+        <p>Add some variables with sample test data:</p>
         <form class="vars form-inline" ng-submit="addVar()">
-            <input type="text" ng-pattern="/^[a-z][a-zA-Z0-9]*$/" ng-model="varName" placeholder="myVarName"/>
-            <input type="text" class="input" ng-model="varType" placeholder="type"/>
-            <input type="text" class="input" ng-model="varTestData" placeholder="test Value"/>
-            <input class="btn btn-primary" type="submit" value="add"/>
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Test Data</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="var in dto.vars">
+                        {% verbatim %}
+                        <td><input type="text" ng-change="change()" ng-pattern="/^[a-z][a-zA-Z0-9]*$/" ng-model="var.name" value="{{var.name}}"/></td>
+                        <td><input type="text" class="input" ng-change="change()" ng-model="var.type" value="{{var.type}}"/></td>
+                        <td><input type="text" class="input" ng-change="change()" ng-model="var.testData" value="{{var.testData}}"/></td>
+                        <td></td>
+                        {% endverbatim %}
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" ng-pattern="/^[a-z][a-zA-Z0-9]*$/" ng-model="varName" placeholder="myVarName"/>
+                        </td>
+                        <td>
+                            <input type="text" class="input" ng-model="varType" placeholder="type"/>
+                        </td>
+                        <td>
+                            <input type="text" class="input" ng-model="varTestData" placeholder="test Value"/>
+                        </td>
+                        <td><input class="btn btn-primary" type="submit" value="add"/></td>
+                    <tr>
+                </tbody>
+            </table>
         </form>
-        <div class="row">
-            <div class="span12">
                 <h2>{% verbatim %}{{dto.namespace}}\{{dto.name}}{% endverbatim %}</h2>
                 <textarea ui-codemirror ng-model="code.dto"></textarea>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span12">
                 <h2>{% verbatim %}{{dto.namespace}}\{{dto.name}}Test{% endverbatim %}</h2>
                 <textarea ui-codemirror ng-model="code.test"></textarea>
-                </div>
-        </div>
-    </div>
+         </div>
 {% endblock %}

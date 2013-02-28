@@ -10,3 +10,7 @@
 .vars input[type=text] {
     height: 28px;
 }
+
+.title h1{
+    font-size: 62px;
+}

@@ -4,7 +4,8 @@ DTOx.value('ui.config', {
    codemirror: {
       mode: 'text/x-php',
       lineNumbers: true,
-      matchBrackets: true
+      matchBrackets: true,
+      theme: 'vibrant-ink'
    }
 });
 
