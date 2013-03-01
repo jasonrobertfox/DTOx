@@ -27,7 +27,7 @@ function DTOCtrl($scope, $timeout, $http){
       $scope.dto.vars.push({name: $scope.varName, type: $scope.varType, testData: $scope.varTestData});
       $scope.varName = '';
       $scope.varType = '';
-      $scope.vatTestData = '';
+      $scope.varTestData = '';
       $scope.change();
     };
 }

@@ -9,8 +9,27 @@
 
 .vars input[type=text] {
     height: 28px;
+    background: black;
+    font-family: monospace;
 }
 
 .title h1{
     font-size: 62px;
 }
+
+input.variable {
+    color: #FFC66D;
+}
+
+input.type{
+    color: gray;
+}
+
+input.test-data{
+    color: #A5C25C;
+}
+
+input.namespace{
+    color: white;
+}
+
