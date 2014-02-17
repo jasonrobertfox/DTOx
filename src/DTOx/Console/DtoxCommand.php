@@ -60,7 +60,8 @@ class DtoxCommand extends Command
 
     private function getClassName($fqcn)
     {
-        return array_pop(explode('\\', $fqcn));
+        $exploded = explode('\\', $fqcn);
+        return array_pop($exploded);
     }
 
     private function getNameSpace($fqcn)
