@@ -1,0 +1,74 @@
+{% extends 'default.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="title span12">
+            <h1><i class="icon-beaker icon-large"></i> DTOx</h1>
+            <blockquote class="lead">
+                    "Writing tedious code sucks. Generate it with DTOx."
+                    <small><a href="https://twitter.com/jasonrobertfox">@jrobertfox</a></small>
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="row" ng-controller="DTOCtrl">
+        <div class="span12 well">
+            <div class="row">
+            <div class="span4">
+        <form class="vars">
+            <label>Name your DTO:</label>
+            <input type="text" class="span4 namespace" placeholder="MyDTO" ng-model="dto.name" ng-change="change()">
+            <label>Give it a Namespace:</label>
+            <input type="text" class="span4 namespace" placeholder="My\App\Namespace" ng-model="dto.namespace" ng-change="change()">
+        </form>
+        </div>
+        <div class="span8">
+            <div class="alert alert-info">
+
+          <strong><i class="icon-info-sign"></i> Um, so now what?</strong>
+          <p>Fill in the fields to the left and below. Once you add some variables to your <a href="http://www.neverstopbuilding.com/data-transfer-object">DTO</a> the code will be generated. Feel free to update them on the fly. Put your new code in your project. Use the time you saved to go have a <a href="http://www.sintbernardus.be/stbernardusabt12.php?l=en">beer</a>.</p>
+        </div>
+        </div>
+        </div>
+        <p>Add some variables with sample test data:</p>
+        <form class="vars form-inline" ng-submit="addVar()">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Test Data</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="var in dto.vars">
+                        {% verbatim %}
+                        <td><input type="text" class="variable" ng-change="change()" ng-pattern="/^[a-z][a-zA-Z0-9]*$/" ng-model="var.name" value="{{var.name}}"/></td>
+                        <td><input type="text" class="type" ng-change="change()" ng-model="var.type" value="{{var.type}}"/></td>
+                        <td><input type="text" class="test-data" ng-change="change()" ng-model="var.testData" value="{{var.testData}}"/></td>
+                        <td></td>
+                        {% endverbatim %}
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="variable" ng-pattern="/^[a-z][a-zA-Z0-9]*$/" ng-model="varName" placeholder="sampleId"/>
+                        </td>
+                        <td>
+                            <input type="text" class="type" ng-model="varType" placeholder="int"/>
+                        </td>
+                        <td>
+                            <input type="text" class="test-data" ng-model="varTestData" placeholder="123"/>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="icon-plus"></i> Add
+                            </button>
+                        </td>
+                    <tr>
+                </tbody>
+            </table>
+        </form>
+                <h2>{% verbatim %}{{dto.namespace}}\{{dto.name}}{% endverbatim %}</h2>
+                <textarea ui-codemirror ng-model="code.dto"></textarea>
+                <h2>{% verbatim %}{{dto.namespace}}\{{dto.name}}Test{% endverbatim %}</h2>
+                <textarea ui-codemirror ng-model="code.test"></textarea>
+         </div>
+{% endblock %}

@@ -14,7 +14,7 @@ use DTOx\Domain\CodeGenerator;
 /**
  * @package    DTOx\Domain
  */
-abstract class AbstractClassElement implements CodeGenerator
+abstract class AbstractClassElement extends CodeGenerator
 {
 
     /**

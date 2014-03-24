@@ -49,7 +49,33 @@ class DTOUnitTest extends \PHPUnit_Framework_TestCase
     public function returnValidCodeForSimpleDTO()
     {
         $generator = $this->getValidDTOUnit();
-        $expected = '<?php
+        $this->assertEquals($this->validCodeOutput(), $generator->generate(), 'generate');
+    }
+
+    /**
+     * @test
+     * @group generator
+     * @group generator-dto
+     */
+    public function returnValidCodeForRubyCaseDTOTest()
+    {
+        $generator = $this->getValidDTOUnitRubyCase();
+        $this->assertEquals($this->validCodeOutput(), $generator->generate(), 'generate');
+    }
+
+    private function getValidDTOUnit()
+    {
+        return new DTOUnit('WidgetDTO', 'Company\Application\CamelCasedNameSpace', array('id'=>123, 'name'=>'John Doe'));
+    }
+
+    private function getValidDTOUnitRubyCase()
+    {
+        return new DTOUnit('widget_d_t_o', 'company\application\camel_cased_name_space', array('id'=>123, 'name'=>'John Doe'));
+    }
+
+    private function validCodeOutput()
+    {
+        return '<?php
 namespace Company\Application\CamelCasedNameSpace;
 
 use Company\Application\CamelCasedNameSpace\WidgetDTO;
@@ -135,11 +161,7 @@ class WidgetDTOTest extends \PHPUnit_Framework_TestCase
     }
 }
 ';
-        $this->assertEquals($expected, $generator->generate(), 'generate');
     }
 
-    private function getValidDTOUnit()
-    {
-        return new DTOUnit('WidgetDTO', 'Company\Application\CamelCasedNameSpace', array('id'=>123, 'name'=>'John Doe'));
-    }
+
 }

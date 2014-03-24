@@ -14,7 +14,7 @@ use DTOx\Domain\CodeGenerator;
 /**
  * @package    DTOx\Domain
  */
-class ClassFile implements CodeGenerator
+class ClassFile extends CodeGenerator
 {
     private $lines = array('<?php');
     private $useStatements = array();
