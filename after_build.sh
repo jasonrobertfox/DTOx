@@ -11,7 +11,7 @@ echo 'Update composer.phar.'
 $PHP composer.phar self-update
 
 echo 'Install the needed vendors for this application.'
-$PHP composer.phar install
+$PHP composer.phar install --no-dev
 
 echo 'Dump the optimized autoloader classmap for performance reasons.'
 $PHP composer.phar dump-autoload --optimize
