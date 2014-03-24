@@ -19,12 +19,16 @@ use DTOx\Domain\ClassElement\ClassMethodElement;
 /**
  * @package    DTOx\Generator
  */
-class DTO implements CodeGenerator
+class DTO extends CodeGenerator
 {
     private $classFile = null;
 
     public function __construct($className, $classNameSpace, $variables)
     {
+
+        $className = $this->cleanClassName($className);
+        $classNameSpace = $this->cleanNameSpace($classNameSpace);
+
         $this->classFile = new ClassFile($className, $classNameSpace);
         $this->classFile->addImplementsStatement('Serializable');
         $this->addProperties($variables);

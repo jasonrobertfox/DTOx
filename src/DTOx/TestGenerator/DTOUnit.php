@@ -20,12 +20,15 @@ use DTOx\Domain\ClassElement\ClassMethodElement;
 /**
  * @package    DTOx\TestGenerator
  */
-class DTOUnit implements CodeGenerator, TestGenerator
+class DTOUnit extends CodeGenerator implements TestGenerator
 {
     private $classFile = null;
 
     public function __construct($className, $classNameSpace, $variables)
     {
+        $className = $this->cleanClassName($className);
+        $classNameSpace = $this->cleanNameSpace($classNameSpace);
+
         $this->classFile = new ClassFile($className.'Test', $classNameSpace);
         $this->classNameSpace = $classNameSpace;
         $this->className = $className;

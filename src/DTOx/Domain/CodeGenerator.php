@@ -12,12 +12,28 @@ namespace DTOx\Domain;
 /**
  * @package    DTOx\Domain
  */
-interface CodeGenerator
+abstract class CodeGenerator
 {
+
+    protected function cleanClassName($className)
+    {
+        $words = explode('_', $className);
+        if (count($words) > 1) {
+            return implode('', array_map('ucwords', array_map('strtolower', $words)));
+        } else {
+            return ucfirst($words[0]);
+        }
+    }
+
+    protected function cleanNameSpace($nameSpace)
+    {
+        return implode('\\', array_map(array($this, 'cleanClassName'), explode('\\', $nameSpace)));
+    }
+
     /**
      * Returns a string containing php code
      *
      * @return string
      */
-    public function generate();
+    abstract public function generate();
 }

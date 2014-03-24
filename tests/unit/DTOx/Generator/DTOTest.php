@@ -36,7 +36,33 @@ class DTOTest extends \PHPUnit_Framework_TestCase
     public function returnValidCodeForSimpleDTO()
     {
         $generator = $this->getValidDTO();
-        $expected = '<?php
+        $this->assertEquals($this->validCodeOutput(), $generator->generate(), 'generate');
+    }
+
+    /**
+     * @test
+     * @group generator
+     * @group generator-dto
+     */
+    public function returnValidCodeRegardlessOfCase()
+    {
+        $generator = $this->getRubyCaseDTO();
+        $this->assertEquals($this->validCodeOutput(), $generator->generate(), 'generate');
+    }
+
+    private function getValidDTO()
+    {
+        return new DTO('WidgetDTO', 'Company\Application', array('id'=>'string', 'name'=>'string'));
+    }
+
+    private function getRubyCaseDTO()
+    {
+        return new DTO('wiDget_d_t_o', 'company\application', array('id'=>'string', 'name'=>'string'));
+    }
+
+    private function validCodeOutput()
+    {
+        return '<?php
 namespace Company\Application;
 
 /**
@@ -110,12 +136,6 @@ class WidgetDTO implements \Serializable
     }
 }
 ';
-        $this->assertEquals($expected, $generator->generate(), 'generate');
-    }
-
-    private function getValidDTO()
-    {
-        return new DTO('WidgetDTO', 'Company\Application', array('id'=>'string', 'name'=>'string'));
     }
 
 }
