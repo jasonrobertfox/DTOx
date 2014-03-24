@@ -6,4 +6,4 @@ Feature: Provide a web interface for DTOx
     Scenario:
       Given I am on homepage
       Then I should see "DTOx"
-      And I should see "DTOx is a program that lets you create DTOs."
+      And I should see "Writing tedious code sucks. Generate it with DTOx."

@@ -6,5 +6,5 @@ Feature: There is a form that I can enter details about the feature
 
   Scenario: I can see the form on the home page
     Given I am on homepage
-    Then I should see "Build me a DTO named"
-    And I should see "in the Namespace"
+    Then I should see "Name your DTO:"
+    And I should see "Give it a Namespace:"

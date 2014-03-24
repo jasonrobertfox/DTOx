@@ -11,6 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+// TODO: This hack should be pulled out somewhere.
+function isValid($dtoInfo)
+{
+    return property_exists($dtoInfo, 'name')
+    && property_exists($dtoInfo, 'namespace')
+    && property_exists($dtoInfo, 'vars')
+    && count($dtoInfo->vars) > 0;
+}
+
 $app = new Silex\Application();
 
 $app->register(
@@ -32,17 +41,19 @@ $app->post(
     function (Request $request) use ($app) {
         $dtoInfo = json_decode($request->getContent());
 
-        $variablesArray = array();
-        $testDataArray = array();
-        foreach ($dtoInfo->vars as $var) {
-            $variablesArray[$var->name] = $var->type;
-            $testDataArray[$var->name] = $var->testData;
+        $returnData = new \StdClass();
+        if (isValid($dtoInfo)) {
+            $variablesArray = array();
+            $testDataArray = array();
+            foreach ($dtoInfo->vars as $var) {
+                $variablesArray[$var->name] = $var->type;
+                $testDataArray[$var->name] = $var->testData;
+            }
+            $generator = new DTOx\Generator\DTO($dtoInfo->name, $dtoInfo->namespace, $variablesArray);
+            $returnData->dto = $generator->generate();
+            $generator = new DTOx\TestGenerator\DTOUnit($dtoInfo->name, $dtoInfo->namespace, $testDataArray);
+            $returnData->test = $generator->generate();
         }
-        $returnData =  new \StdClass();
-        $generator =  new DTOx\Generator\DTO($dtoInfo->name, $dtoInfo->namespace, $variablesArray);
-        $returnData->dto = $generator->generate();
-        $generator = new DTOx\TestGenerator\DTOUnit($dtoInfo->name, $dtoInfo->namespace, $testDataArray);
-        $returnData->test = $generator->generate();
         return $app->json($returnData);
     }
 );
