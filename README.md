@@ -27,6 +27,3 @@ Run a full build all the time:
 
     cd build-deploy
     ant build:full
-
-
-    

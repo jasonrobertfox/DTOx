@@ -1,2 +1,2 @@
-/tests export-ignore
-/build-deploy export-ignore
+tests export-ignore
+build-deploy export-ignore
