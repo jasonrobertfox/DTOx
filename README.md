@@ -8,6 +8,9 @@ Checkout the main documentation for more info: [http://jrobertfox.github.com/DTO
 
     dtox react dto-unit 'SludgeCo\Acid\BurnyDTO' "Red Acid:name" 10:burnLevel
 
+##Use Online
+Checkout the [web interface](http://dtox.pagodabox.com) to build your DTOs interactively.
+
 ##Development Requirements
 - [Composer](http://getcomposer.org/)
 - PHP 5.3.14+
