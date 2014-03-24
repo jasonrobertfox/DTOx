@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="DTOx - Composer" basedir="../">
+
+    <target name="composer" depends="composer:setup" description="Installs only required composer dependencies">
+        <exec dir="${basedir}" executable="php" failonerror="true">
+            <arg value="${basedir}/build-deploy/composer.phar" />
+            <arg value="install" />
+        </exec>
+    </target>
+
+    <target name="composer:dev" depends="composer:setup" description="Installs all required and development composer dependencies">
+        <exec dir="${basedir}" executable="php" failonerror="true">
+            <arg value="${basedir}/build-deploy/composer.phar" />
+            <arg value="install" />
+            <arg value="--dev" />
+        </exec>
+    </target>
+
+    <target name="composer:optimize" depends="composer:setup" description="Generates a optimized autoloading class map">
+        <exec dir="${basedir}" executable="php" failonerror="true">
+            <arg value="${basedir}/build-deploy/composer.phar" />
+            <arg value="dump-autoload" />
+            <arg value="--optimize" />
+        </exec>
+    </target>
+
+    <target name="composer:update" depends="composer:setup" description="Updates all required and development composer dependencies and composer.lock">
+        <exec dir="${basedir}" executable="php" failonerror="true">
+            <arg value="${basedir}/build-deploy/composer.phar" />
+            <arg value="update" />
+            <arg value="--dev" />
+        </exec>
+    </target>
+
+    <target name="composer:setup" depends="-check-composer-binary" unless="composer.exists" description="Downloads composer.phar if not present for use in dependency management">
+        <exec dir="${basedir}/build-deploy/" executable="sh" failonerror="true">
+            <arg value="composer-setup.sh" />
+        </exec>
+    </target>
+
+    <target name="-check-composer-binary">
+        <available property="composer.exists" file="${basedir}/build-deploy/composer.phar" />
+    </target>
+
+</project>
