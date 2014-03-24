@@ -6,3 +6,9 @@ default:
     Behat\MinkExtension\Extension:
       base_url: {{default.extensions.mink.browser_name}}
       goutte: ~
+
+phantomjs:
+    extensions:
+        Behat\MinkExtension\Extension:
+            selenium2:
+                wd_host: "http://localhost:8643/wd/hub"

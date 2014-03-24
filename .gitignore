@@ -4,5 +4,5 @@ build
 composer.lock
 cache.properties
 .DS_Store
-
+composer.phar
 build-deploy/config-template/behat.properties

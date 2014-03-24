@@ -17,4 +17,36 @@
         </exec>
     </target>
 
+    <target name="behat:js" description="Run system tests with behat except those requiring javascript interaction." depends="prepare, phantom:stop, phantom:start">
+        <exec dir="${basedir}" executable="${basedir}/bin/behat" failonerror="true">
+            <arg value="--tags=@javascript" />
+            <arg value="--config=${basedir}/tests/system/behat.yml" />
+            <arg value="--profile=phantomjs" />
+            <arg value="--format=html,progress" />
+            <arg value="--out=build/logs/behat.html," />
+        </exec>
+        <antcall target="phantom:stop" />
+    </target>
+
+    <target name="phantom:start">
+        <exec executable="phantomjs" failonerror="false" spawn="true">
+            <arg value="--webdriver=8643" />
+        </exec>
+        <echo message="==========================" />
+        <echo message="|   Starting PhantomJS   |" />
+        <echo message="==========================" />
+    </target>
+
+    <target name="phantom:stop">
+        <exec executable="pgrep" failonerror="false" outputproperty="phantom.process">
+            <arg value="phantomjs" />
+        </exec>
+        <exec executable="kill" failonerror="false">
+            <arg value="${phantom.process}" />
+        </exec>
+        <echo message="=========================" />
+        <echo message="|   Stopped PhantomJS   |" />
+        <echo message="=========================" />
+    </target>
+
 </project>

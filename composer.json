@@ -26,19 +26,20 @@
         }
     },
     "require": {
-        "symfony/console": "v2.1.3",
+        "symfony/console": "*",
         "silex/silex": "1.0.*@dev",
         "twig/twig": ">=1.8,<2.0-dev"
     },
     "require-dev": {
         "mockery/mockery": ">=0.7.2",
-        "phpunit/phpunit": "3.7.*",
+        "phpunit/phpunit": "*",
         "fabpot/php-cs-fixer": "dev-master",
         "squizlabs/php_codesniffer": "dev-master",
         "behat/behat": "2.4.*@stable",
         "behat/mink": "1.4@stable",
         "behat/mink-goutte-driver": "*",
-        "behat/mink-extension": "*"
+        "behat/mink-extension": "*",
+        "behat/mink-selenium2-driver": "*"
     },
     "config": {
         "vendor-dir": "vendor/",
